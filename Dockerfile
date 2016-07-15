@@ -10,8 +10,8 @@ RUN apk add --no-cache \
 
 ENV BASH_SOURCE /bin/bash
 
-RUN mkdir -p /var/run/mysqld /var/lib/mysql
-RUN chown 100:101 /var/run/mysqld /var/lib/mysql
+RUN mkdir -p /var/run/mysqld
+RUN chown 100:101 /var/run/mysqld
 
 RUN mkdir /docker-entrypoint-initdb.d
 COPY my.cnf /etc/mysql/my.cnf
