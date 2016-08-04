@@ -17,7 +17,7 @@ RUN mkdir /docker-entrypoint-initdb.d
 COPY my.cnf /etc/mysql/my.cnf
 COPY docker-entrypoint.sh /usr/local/bin/
 
-WORKDIR /var/www/html
+WORKDIR /var/lib/mysql
 VOLUME /var/lib/mysql
 
 EXPOSE 3306
