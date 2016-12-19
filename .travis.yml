@@ -15,7 +15,6 @@ install:
   - docker run -d --name=mariadb -e "MYSQL_RANDOM_ROOT_PASSWORD=1" -e "MYSQL_DATABASE=drupal" -e "MYSQL_USER=drupal" -e "MYSQL_PASSWORD=drupal" $REPO:$COMMIT
 
 script:
-  - env
   - docker ps | grep -q "$REPO:$COMMIT"
   - |
     for i in {30..0}; do
