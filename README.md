@@ -1,4 +1,5 @@
-# drupal-mariadb
+# MariaDB container for Drupal 7/8
 
-[![](https://images.microbadger.com/badges/image/wodby/drupal-mariadb.svg)](https://microbadger.com/images/wodby/drupal-mariadb "Get your own image badge on microbadger.com")
-[![](https://images.microbadger.com/badges/version/wodby/drupal-mariadb.svg)](https://microbadger.com/images/wodby/drupal-mariadb "Get your own version badge on microbadger.com")
+[![Build Status](https://travis-ci.org/Wodby/drupal-mariadb.svg?branch=master)](https://travis-ci.org/wodby/drupal-mariadb)
+[![Docker Pulls](https://img.shields.io/docker/pulls/wodby/drupal-mariadb.svg)][hub]
+[![Docker Stars](https://img.shields.io/docker/stars/wodby/drupal-mariadb.svg)][hub]

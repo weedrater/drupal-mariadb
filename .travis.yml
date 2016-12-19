@@ -1,0 +1,29 @@
+language: python
+
+sudo: required
+
+services:
+  - docker
+
+env:
+  global:
+    - REPO=wodby/drupal-mariadb
+    - COMMIT=${TRAVIS_COMMIT::8}
+    - BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+
+install:
+  - docker build -t $REPO:$COMMIT ./
+
+script:
+  - pwd
+
+after_success: |
+  if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$BRANCH" == "master" ]; then
+    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    docker tag $REPO:$COMMIT $REPO:latest;
+
+    if [ -n "$TRAVIS_TAG" ]; then docker tag $REPO:$COMMIT $REPO:$TRAVIS_TAG; fi
+
+    docker rmi $REPO:$COMMIT
+    docker push $REPO
+  fi
