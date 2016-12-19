@@ -16,6 +16,7 @@ install:
 
 script:
   - docker ps | grep -q "$REPO:$COMMIT"
+  - sleep 3
   - docker exec mariadb mysql -udrupal -pdrupal -e "SHOW DATABASES;" | grep "drupal"
 
 after_success: |
