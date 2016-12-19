@@ -9,16 +9,17 @@ env:
   global:
     - REPO=wodby/drupal-mariadb
     - COMMIT=${TRAVIS_COMMIT::8}
-    - BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
 
 install:
   - docker build -t $REPO:$COMMIT ./
+  - docker run -d --name=mariadb -e "MYSQL_RANDOM_ROOT_PASSWORD=1" -e "MYSQL_DATABASE=drupal" -e "MYSQL_USER=drupal" -e "MYSQL_PASSWORD=drupal" $REPO:$COMMIT
 
 script:
-  - pwd
+  - docker ps | grep -q "$REPO:$COMMIT"
+  - docker exec mariadb mysql -udrupal -pdrupal -e "SHOW DATABASES;" | grep "drupal"
 
 after_success: |
-  if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$BRANCH" == "master" ]; then
+  if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     docker tag $REPO:$COMMIT $REPO:latest;
 
@@ -27,3 +28,6 @@ after_success: |
     docker rmi $REPO:$COMMIT
     docker push $REPO
   fi
+
+after_failure:
+  - docker logs mariadb
