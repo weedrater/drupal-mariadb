@@ -25,7 +25,6 @@ script:
       sleep 1
     done
   - docker exec mariadb mysql -udrupal -pdrupal -e "SHOW DATABASES;" | grep "drupal"
-  - docker exec mariadb mysql --version | grep "10.1.19-MariaDB"
 
 after_success: |
   if [ "$TRAVIS_PULL_REQUEST" == "false" ] && ([ "$TRAVIS_BRANCH" == "master" ] || [ -n "$TRAVIS_TAG" ]); then
