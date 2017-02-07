@@ -1,12 +1,14 @@
 FROM alpine:3.5
 MAINTAINER Wodby <admin@wodby.com>
 
+ENV MARIADB_VER 10.1.21-r0
+
 RUN apk add --no-cache \
         bash \
         tzdata \
         pwgen \
-        mariadb=10.1.20-r0 \
-        mariadb-client=10.1.20-r0
+        mariadb=${MARIADB_VER} \
+        mariadb-client
 
 RUN mkdir -p /var/run/mysqld
 RUN chown 100:101 /var/run/mysqld
